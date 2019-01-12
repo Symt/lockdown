@@ -1,80 +1,119 @@
 package com.lockdown.java.application;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
-import java.io.IOException;
-import java.net.URL;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.File;
 
-import javax.swing.JEditorPane;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
 
-import org.apache.commons.lang3.StringUtils;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.events.EventListener;
+import org.w3c.dom.events.EventTarget;
 
 import com.lockdown.java.event.EventHandler;
+import com.sun.webkit.dom.HTMLElementImpl;
+
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Worker.State;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 
 public class Applet extends JFrame {
 
+	private GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 	private static final long serialVersionUID = 1L;
-	public static Applet applet;
+	private final JFXPanel jfxPanel = new JFXPanel();
+	private WebEngine engine;
+	private final JPanel panel = new JPanel(new BorderLayout());
+	public static Applet browser;
+	String url = "";
 
 	public Applet() {
+		super();
+		initComponents();
+	}
+
+	private void initComponents() {
+		createScene();
+
+		panel.add(jfxPanel, BorderLayout.CENTER);
+
+		getContentPane().add(panel);
+
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setSize((int) screenSize.getWidth(), (int) screenSize.getHeight());
-		String data = readFile(System.getProperty("user.dir") + "/src/com/lockdown/html/data.html",
-				Charset.defaultCharset());
-		JEditorPane html = null;
-		html = new JEditorPane();
-		html.setContentType("text/html");
-		html.setEditable(false);
-		html.setText(data);
-		html.addHyperlinkListener(new HyperlinkListener() {
-
-			@Override
-			public void hyperlinkUpdate(HyperlinkEvent hle) {
-				if (hle.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-					URL url = hle.getURL();
-					EventHandler.passEvent(StringUtils.replace(url.toString(), "https://", ""), false, 1000, -1);
-				}
-			}
-		});
-		add(html);
 		setTitle("Lockdown Service Application");
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setVisible(true);
-		applet = this;
+		pack();
+
+	}
+
+	private void createScene() {
+
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+
+				WebView view = new WebView();
+				engine = view.getEngine();
+				jfxPanel.setScene(new Scene(view));
+				engine.getLoadWorker().stateProperty().addListener(new ChangeListener<State>() {
+					public void changed(ObservableValue ov, State oldState, State newState) {
+						if (newState == State.SUCCEEDED) {
+							EventListener listener = new EventListener() {
+								public void handleEvent(Event ev) {
+									String event = ((HTMLElementImpl) ev.getTarget()).getAttribute("href");
+									EventHandler.passEvent(event, false, 1000, -1);
+								}
+							};
+							Document doc = engine.getDocument();
+							NodeList list = doc.getElementsByTagName("span");
+							for (int i = 0; i < list.getLength(); i++)
+								((EventTarget) list.item(i)).addEventListener("click", listener, false);
+						}
+					}
+				});
+			}
+		});
+	}
+
+	public void loadURL(final String url) {
+		Platform.runLater(new Runnable() {
+			public void run() {
+				File f = new File(System.getProperty("user.dir") + "/src/com/lockdown/html/data.html");
+				engine.load(f.toURI().toString());
+			}
+		});
 	}
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
+
 			public void run() {
-				new Applet();
+				browser = new Applet();
+				browser.setVisible(true);
+				browser.loadURL("");
 			}
 		});
 	}
 
-	public String readFile(String path, Charset encoding) {
-		try {
-			byte[] encoded = Files.readAllBytes(Paths.get(path));
-			return new String(encoded, encoding);
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.exit(0);
-		}
-		return null;
-	}
-	
-	public void fullScreen()
-	{
-		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+	public void fullScreen() {
 		gd.setFullScreenWindow(this);
+	}
+
+	public void minScreen() {
+		gd.setFullScreenWindow(null);
 	}
 }

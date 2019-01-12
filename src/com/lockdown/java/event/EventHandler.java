@@ -1,12 +1,9 @@
 package com.lockdown.java.event;
 
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
+import java.util.Arrays;
 
-import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.lockdown.java.application.Applet;
 
@@ -14,62 +11,53 @@ public final class EventHandler {
 
 	public static void passEvent(String event, boolean repeats, long repeatDelay, int iterations) {
 		Trigger t = null;
-		switch (event) {
-		case "{download_file}":
-			t = () -> {
-				// TODO: Allow for parameter input for file url and file name
-				FileDownloader fd = new FileDownloader("", "");
-				fd.downloadFile();
-			};
-			break;
-		case "{execute_command}":
-			t = () -> {
-				String[] args = new String[] {"/bin/bash", "-c", "say Hello World"};
-				try {
-					Process proc = new ProcessBuilder(args).start();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}	
-			};
-			break;
-			
-		case "{fullscreen}":
-			t = () -> {
-				Applet.applet.fullScreen();
-			};
-			break;
-			
-		case "{no_internal_action}":
-			return; // No reason to waste processing power doing nothing, so might as well exit the
-					// method.
-		default:
-			return;
+		event = StringUtils.replace(StringUtils.replace(event, "{", ""), "}", "");
+		String[] old = event.split("\\|");
+		String[] args = new String[1];
+		if (old.length - 1 > 0) {
+			args = Arrays.copyOfRange(old, 1, old.length);
 		}
-		Event e = new Event(event, repeats, repeatDelay, iterations, t);
+		try {
+			switch (old[0]) {
+			case "download_file":
+				t = (arg) -> {
+					// TODO: Allow for parameter input for file url and file name
+					FileDownloader fd = new FileDownloader("https://" + arg[0], arg[1]);
+					fd.downloadFile();
+				};
+				break;
+			case "execute_command":
+				t = (arg) -> {
+					String[] arguments = new String[] { "/bin/bash", "-c", arg[0] };
+					try {
+						Process proc = new ProcessBuilder(arguments).start();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				};
+				break;
+			case "minscreen":
+				t = (nothing) -> {
+					Applet.browser.minScreen();
+				};
+				break;
+			case "fullscreen":
+				t = (nothing) -> {
+					Applet.browser.fullScreen();
+				};
+				break;
+
+			case "no_internal_action":
+				return; // No reason to waste processing power doing nothing, so might as well exit the
+						// method.
+			default:
+				return;
+			}
+		} catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
+			System.out.println("Malformed command: " + event + "\nIt should contain more/less parts to match up with the command. See the documentation (Comming soon)");
+		}
+		Event e = new Event(event, repeats, repeatDelay, iterations, t, args);
 		e.execute();
 	}
 
-}
-
-class FileDownloader {
-	public static boolean isDownloading;
-	public final String fileLink;
-	public final String fileName;
-	public final File file;
-
-	public FileDownloader(String link, String fileName) {
-		fileLink = link;
-		this.fileName = fileName;
-		file = new File(System.getProperty("user.home") + "/Downloads/" + fileName);
-	}
-
-	public void downloadFile() {
-		try {
-			URL downloadUrl = new URL(fileLink);
-			file.createNewFile();
-			FileUtils.copyURLToFile(downloadUrl, file, 0, 0);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 }

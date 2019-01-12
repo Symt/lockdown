@@ -3,13 +3,10 @@
 
 <head>
     <script>
-        function update(location) {
-
-        }
     </script>
     <style>
         body {
-            background-color: #e6e6e6;
+            background-color: #ffffff;
             color: #000000;
             margin: 0;
             padding: 0;
@@ -17,40 +14,25 @@
             height: 100%;
         }
 
-        #menu {
-            background-color: #2f5da8;
-            width: 100%;
-            height: 200px;
-            position: absolute;
-            top: 0;
-            margin: auto;
-        }
-
         /* Selector Order: Link Visited Hover Active */
-        a {
+        span {
+            margin: 15px;
             text-decoration: none;
-        }
-
-        #menu a {
-            color: #ffffff;
-        }
-
-        #menu a:visited {
-            color: #ffffff;
+            cursor: pointer;
         }
     </style>
 </head>
 
 <body>
-    <div id="menu">
-        <a onclick="update('home')" href="https://{no_internal_action}" class="">Home</a>
-        <a onclick="update('Applications')" href="https://{no_internal_action}" class="">Applications</a>
-        <a onclick="update('Commands')" href="https://{no_internal_action}" class="">Commands</a>
-        <a onclick="update('Settings')" href="https://{no_internal_action}" class="">Settings</a>
-    </div>
-    <a href="https://{download_file}">Download Button</a>
-    <a href="https://{execute_command}">Execute Button</a>
-    <a href="https://{fullscreen}">Fullscreen</a>
+    <span onclick="update('home')" href="no_internal_action}" class="">Home</span><br />
+    <span onclick="update('Applications')" href="{no_internal_action}" class="">Applications</span><br />
+    <span onclick="update('Commands')" href="{no_internal_action}" class="">Commands</span><br />
+    <span onclick="update('Settings')" href="{no_internal_action}" class="">Settings</span><br />
+    <span href="{download_file|www.geeksforgeeks.org/wp-content/uploads/gq/2016/01/serialize-deserialize-java.png|serialize-deserialize-java.png}">Download
+        Button</span><br />
+    <span href="{execute_command}">Execute Button</span><br />
+    <span href="{fullscreen}">Fullscreen</span><br />
+    <span href="{minscreen}">Minimize</span><br />
 </body>
 
 </html>

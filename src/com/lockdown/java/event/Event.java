@@ -6,13 +6,15 @@ public class Event {
 	private long repeatDelay;
 	private int iterations;
 	private Trigger trigger;
-
-	public Event(String name, boolean repeat, long repeatDelay, int iterations, Trigger trigger) {
+	private String[] args;
+	
+	public Event(String name, boolean repeat, long repeatDelay, int iterations, Trigger trigger, String[] args) {
 		this.name = name;
 		this.repeat = repeat;
 		this.repeatDelay = repeatDelay;
 		this.iterations = iterations;
 		this.trigger = trigger;
+		this.args = args;
 	}
 
 	@SuppressWarnings("unused")
@@ -37,6 +39,6 @@ public class Event {
 	}
 	
 	public void execute() {
-		trigger.trigger();
+		trigger.trigger(args);
 	}
 }
