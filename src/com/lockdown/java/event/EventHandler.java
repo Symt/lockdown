@@ -27,18 +27,15 @@ public final class EventHandler {
 				String[] args = new String[] {"/bin/bash", "-c", "say Hello World"};
 				try {
 					Process proc = new ProcessBuilder(args).start();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
 				}	
 			};
 			break;
 			
-		case "{FullScreen}":
+		case "{fullscreen}":
 			t = () -> {
-				
 				Applet.applet.fullScreen();
-				
 			};
 			break;
 			

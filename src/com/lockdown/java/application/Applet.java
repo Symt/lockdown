@@ -12,6 +12,7 @@ import java.nio.file.Paths;
 
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 
@@ -53,7 +54,11 @@ public class Applet extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		new Applet();
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				new Applet();
+			}
+		});
 	}
 
 	public String readFile(String path, Charset encoding) {
