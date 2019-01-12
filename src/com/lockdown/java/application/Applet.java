@@ -112,7 +112,6 @@ public class Applet extends JFrame {
 	public void fullScreen() {
 		gd.setFullScreenWindow(this);
 	}
-
 	public void minScreen() {
 		gd.setFullScreenWindow(null);
 	}
