@@ -21,8 +21,7 @@ public final class EventHandler {
 			switch (old[0]) {
 			case "download_file":
 				t = (arg) -> {
-					// TODO: Allow for parameter input for file url and file name
-					FileDownloader fd = new FileDownloader("https://" + arg[0], arg[1]);
+					FileDownloader fd = new FileDownloader("https://" + arg[0], arg[1], System.getProperty("user.home") + "/Downloads/");
 					fd.downloadFile();
 				};
 				break;
@@ -53,7 +52,7 @@ public final class EventHandler {
 			default:
 				return;
 			}
-		} catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
+		} catch (ArrayIndexOutOfBoundsException | NullPointerException e ) {
 			System.out.println("Malformed command: " + event + "\nIt should contain more/less parts to match up with the command. See the documentation (Comming soon)");
 		}
 		Event e = new Event(event, repeats, repeatDelay, iterations, t, args);

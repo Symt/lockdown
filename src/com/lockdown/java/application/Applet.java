@@ -56,6 +56,7 @@ public class Applet extends JFrame {
 		setTitle("Lockdown Service Application");
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setMinimumSize(new Dimension(800, 800));
 		pack();
 
 	}
@@ -65,7 +66,6 @@ public class Applet extends JFrame {
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
-
 				WebView view = new WebView();
 				engine = view.getEngine();
 				jfxPanel.setScene(new Scene(view));

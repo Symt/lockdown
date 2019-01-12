@@ -12,10 +12,10 @@ public class FileDownloader {
 	public final String fileName;
 	public final File file;
 
-	public FileDownloader(String link, String fileName) {
+	public FileDownloader(String link, String fileName, String downloadDirectory) {
 		fileLink = link;
 		this.fileName = fileName;
-		file = new File(System.getProperty("user.home") + "/Downloads/" + fileName);
+		file = new File(downloadDirectory + fileName);
 	}
 
 	public void downloadFile() {
@@ -26,5 +26,13 @@ public class FileDownloader {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void runFile() {
+		//TODO: Implementation
+		
+		/*
+		 * If the directory is /tmp/ and the file is either a .app or a .pkg, allow the file to be ran and installed to /Applications (or ~/Applications for now).
+		 */
 	}
 }
