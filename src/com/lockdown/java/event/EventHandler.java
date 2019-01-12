@@ -13,14 +13,28 @@ public final class EventHandler {
 		switch (event) {
 		case "{download_file}":
 			t = () -> {
-				//TODO: Allow for parameter input for file url and file name
+				// TODO: Allow for parameter input for file url and file name
 				FileDownloader fd = new FileDownloader("", "");
 				fd.downloadFile();
 			};
 			break;
-			default:
-				t = () -> {
-				};
+		case "{execute_command}":
+			t = () -> {
+				String[] args = new String[] {"/bin/bash", "-c", "say Hello World"};
+				try {
+					Process proc = new ProcessBuilder(args).start();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}	
+			};
+			break;
+			
+		case "{no_internal_action}":
+			return; // No reason to waste processing power doing nothing, so might as well exit the
+					// method.
+		default:
+			return;
 		}
 		Event e = new Event(event, repeats, repeatDelay, iterations, t);
 		e.execute();

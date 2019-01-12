@@ -18,13 +18,14 @@ import org.apache.commons.lang3.StringUtils;
 import com.lockdown.java.event.EventHandler;
 
 public class Applet extends JFrame {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	public Applet() {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		setSize((int)screenSize.getWidth(), (int)screenSize.getHeight());
-		String data = readFile(System.getProperty("user.dir") + "/src/com/lockdown/html/data.html", Charset.defaultCharset());
+		setSize((int) screenSize.getWidth(), (int) screenSize.getHeight());
+		String data = readFile(System.getProperty("user.dir") + "/src/com/lockdown/html/data.html",
+				Charset.defaultCharset());
 		JEditorPane html = null;
 		html = new JEditorPane();
 		html.setContentType("text/html");
@@ -50,7 +51,7 @@ public class Applet extends JFrame {
 	public static void main(String[] args) {
 		new Applet();
 	}
-	
+
 	public String readFile(String path, Charset encoding) {
 		try {
 			byte[] encoded = Files.readAllBytes(Paths.get(path));
