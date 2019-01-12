@@ -1,6 +1,8 @@
 package com.lockdown.java.application;
 
 import java.awt.Dimension;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import java.io.IOException;
 import java.net.URL;
@@ -20,6 +22,7 @@ import com.lockdown.java.event.EventHandler;
 public class Applet extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+	public static Applet applet;
 
 	public Applet() {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -46,6 +49,7 @@ public class Applet extends JFrame {
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
+		applet = this;
 	}
 
 	public static void main(String[] args) {
@@ -61,5 +65,11 @@ public class Applet extends JFrame {
 			System.exit(0);
 		}
 		return null;
+	}
+	
+	public void fullScreen()
+	{
+		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+		gd.setFullScreenWindow(this);
 	}
 }

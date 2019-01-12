@@ -1,10 +1,14 @@
 package com.lockdown.java.event;
 
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
 import org.apache.commons.io.FileUtils;
+
+import com.lockdown.java.application.Applet;
 
 public final class EventHandler {
 
@@ -27,6 +31,14 @@ public final class EventHandler {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}	
+			};
+			break;
+			
+		case "{FullScreen}":
+			t = () -> {
+				
+				Applet.applet.fullScreen();
+				
 			};
 			break;
 			
