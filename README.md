@@ -7,7 +7,7 @@ Create an improvement of Mosyle Manager from scratch to assist teachers with the
 
 
 
-##Credits
+## Credits
 Created by Charles Fulks and Brandon Shannon
 
 Started January 11, 2019

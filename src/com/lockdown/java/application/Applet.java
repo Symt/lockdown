@@ -67,6 +67,7 @@ public class Applet extends JFrame {
 			@Override
 			public void run() {
 				WebView view = new WebView();
+				view.setContextMenuEnabled(false);
 				engine = view.getEngine();
 				jfxPanel.setScene(new Scene(view));
 				engine.getLoadWorker().stateProperty().addListener(new ChangeListener<State>() {
@@ -112,6 +113,7 @@ public class Applet extends JFrame {
 	public void fullScreen() {
 		gd.setFullScreenWindow(this);
 	}
+
 	public void minScreen() {
 		gd.setFullScreenWindow(null);
 	}
