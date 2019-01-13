@@ -26,13 +26,15 @@ public class FileDownloader {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		runFile();
 	}
-	
+
 	public void runFile() {
-		//TODO: Implementation
-		
+		// TODO: Implementation
+
 		/*
-		 * If the directory is /tmp/ and the file is either a .app or a .pkg, allow the file to be ran and installed to /Applications (or ~/Applications for now).
+		 * If the directory is /tmp/ and the file is either a .app or a .pkg, allow the
+		 * file to be ran and installed to /Applications (or ~/Applications for now).
 		 */
 	}
 }

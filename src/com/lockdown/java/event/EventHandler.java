@@ -21,7 +21,7 @@ public final class EventHandler {
 			switch (old[0]) {
 			case "download_file":
 				t = (arg) -> {
-					FileDownloader fd = new FileDownloader("https://" + arg[0], arg[1], System.getProperty("user.home") + "/Downloads/");
+					FileDownloader fd = new FileDownloader("https://" + arg[1], arg[2], System.getProperty("user.home") + arg[0]);
 					fd.downloadFile();
 				};
 				break;
@@ -29,7 +29,7 @@ public final class EventHandler {
 				t = (arg) -> {
 					String[] arguments = new String[] { "/bin/bash", "-c", arg[0] };
 					try {
-						Process proc = new ProcessBuilder(arguments).start();
+						(new ProcessBuilder(arguments)).start();
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
