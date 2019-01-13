@@ -6,6 +6,8 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -52,11 +54,11 @@ public class Applet extends JFrame {
 		getContentPane().add(panel);
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		setSize((int) screenSize.getWidth(), (int) screenSize.getHeight());
+		setMinimumSize(new Dimension(800, 800));
+		setPreferredSize(new Dimension((int) screenSize.getWidth(), (int) screenSize.getHeight()));
 		setTitle("Lockdown Service Application");
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setMinimumSize(new Dimension(800, 800));
 		pack();
 
 	}
@@ -71,7 +73,7 @@ public class Applet extends JFrame {
 				engine = view.getEngine();
 				jfxPanel.setScene(new Scene(view));
 				engine.getLoadWorker().stateProperty().addListener(new ChangeListener<State>() {
-					public void changed(ObservableValue ov, State oldState, State newState) {
+					public void changed(@SuppressWarnings("rawtypes") ObservableValue ov, State oldState, State newState) {
 						if (newState == State.SUCCEEDED) {
 							EventListener listener = new EventListener() {
 								public void handleEvent(Event ev) {
@@ -90,11 +92,15 @@ public class Applet extends JFrame {
 		});
 	}
 
-	public void loadURL(final String url) {
+	public void loadURL() {
 		Platform.runLater(new Runnable() {
 			public void run() {
-				File f = new File(System.getProperty("user.dir") + "/src/com/lockdown/html/data.html");
-				engine.load(f.toURI().toString());
+				URL f = this.getClass().getResource("/com/lockdown/html/data.html");
+				try {
+					engine.load((f.toURI()).toString());
+				} catch (URISyntaxException e) {
+					e.printStackTrace();
+				}
 			}
 		});
 	}
@@ -104,8 +110,8 @@ public class Applet extends JFrame {
 
 			public void run() {
 				browser = new Applet();
+				browser.loadURL();
 				browser.setVisible(true);
-				browser.loadURL("");
 			}
 		});
 	}

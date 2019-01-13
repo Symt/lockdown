@@ -29,7 +29,7 @@ public final class EventHandler {
 				t = (arg) -> {
 					String[] arguments = new String[] { "/bin/bash", "-c", arg[0] };
 					try {
-						Process proc = new ProcessBuilder(arguments).start();
+						(new ProcessBuilder(arguments)).start();
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
