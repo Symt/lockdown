@@ -1,5 +1,6 @@
 package com.lockdown.java.event;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -10,11 +11,13 @@ public class FileDownloader {
 	public static boolean isDownloading;
 	public final String fileLink;
 	public final String fileName;
+	public final String downloadDirectory;
 	public final File file;
 
 	public FileDownloader(String link, String fileName, String downloadDirectory) {
 		fileLink = link;
 		this.fileName = fileName;
+		this.downloadDirectory = downloadDirectory;
 		file = new File(downloadDirectory + fileName);
 	}
 
@@ -30,11 +33,21 @@ public class FileDownloader {
 	}
 
 	public void runFile() {
-		// TODO: Implementation
-
-		/*
-		 * If the directory is /tmp/ and the file is either a .app or a .pkg, allow the
-		 * file to be ran and installed to /Applications (or ~/Applications for now).
-		 */
+		if(downloadDirectory.substring(downloadDirectory.length()-5).equals("/tmp/"))
+		{
+			String currentUsersHomeDir = System.getProperty("user.home");
+			String location = currentUsersHomeDir + File.separator + "Applications" + File.separator + fileName;
+			if(fileName.substring(fileName.length()-4).equals(".app")||fileName.substring(fileName.length()-4).equals(".pkg"))
+			{
+				File finalFile = new File(location);
+				file.renameTo(finalFile);
+				file.delete();
+				try {
+					Desktop.getDesktop().open(finalFile);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 }
