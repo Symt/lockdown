@@ -15,7 +15,7 @@
 
 body {
     overflow-x: hidden;
-    background-color: #ffffff;
+    background-color: #e6e6e6;
     color: #000000;
     margin: 0;
     padding: 0;
@@ -93,7 +93,7 @@ nav {
     margin: auto;
     padding: 0;
     z-index: 1;
-    background-color: #ffffff;
+    background-color: #e6e6e6;
 }
 
 #lockdown-center p {
