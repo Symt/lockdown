@@ -26,8 +26,6 @@
     <string>1.0</string>
     <key>NSHumanReadableCopyright</key>
     <string></string>
-    <key>JVMRuntime</key>
-    <string>jre_1.8.0_181.jre</string>
     <key>JVMMainClassName</key>
     <string>com.lockdown.java.application.Applet</string>
     <key>JVMOptions</key>

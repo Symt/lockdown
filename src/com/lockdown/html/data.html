@@ -1,20 +1,27 @@
 <!DOCTYPE html>
 <html>
+<!--
+    Note: 
+    The commands are wrapped in braces, which is purely optional. 
+    The first thing that happens to the event when handled: 
+    event = StringUtils.replace(StringUtils.replace(event, "{", ""), "}", "");
+    It's just removing it, so either way should work perfectly fine. They're just there for readabilities sake
+-->
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>
         function start() {
-            homestart().then(function() {
+            homestart().then(function () {
                 percent = 0;
                 document.getElementById("hr").style.display = "block";
                 hrstart().then(function cb() {
-                    setTimeout(function() {
+                    setTimeout(function () {
                         if (percent < 101) {
                             cb();
                         } else {
                             document.getElementById("title").style.display = "block";
-                        } 
+                        }
                     }, 10);
                 });
             });
@@ -180,7 +187,10 @@
             position: absolute;
             margin: auto;
             font-size: 32px;
-            left: 0; right: 0; bottom: 0; top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
         }
 
         #title {
@@ -204,7 +214,7 @@
 
 <body onload="start()">
     <nav>
-        <div id="wrapper"><span onclick="update('Home', this)" href="no_internal_action}" class="active navbutton">Home</span><span
+        <div id="wrapper"><span onclick="update('Home', this)" href="{no_internal_action}" class="active navbutton">Home</span><span
                 onclick="update('Applications', this)" href="{no_internal_action}" class="navbutton">Applications</span><span
                 onclick="update('Commands', this)" href="{no_internal_action}" class="navbutton">Commands</span><span
                 onclick="update('Settings', this)" href="{no_internal_action}" class="navbutton">Settings</span>

@@ -1,16 +1,14 @@
-package com.lockdown.java.application;
+ package com.lockdown.java.application;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
-import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import org.w3c.dom.Document;
@@ -31,15 +29,13 @@ import javafx.scene.Scene;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
-public class Applet extends JFrame {
+public class Applet extends JFrame{
 
 	private GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 	private static final long serialVersionUID = 1L;
 	private final JFXPanel jfxPanel = new JFXPanel();
 	private WebEngine engine;
-	private final JPanel panel = new JPanel(new BorderLayout());
 	public static Applet browser;
-	String url = "";
 
 	public Applet() {
 		super();
@@ -49,9 +45,7 @@ public class Applet extends JFrame {
 	private void initComponents() {
 		createScene();
 
-		panel.add(jfxPanel, BorderLayout.CENTER);
-
-		getContentPane().add(panel);
+		add(jfxPanel, BorderLayout.CENTER);
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setMinimumSize(new Dimension(800, 800));
@@ -92,10 +86,10 @@ public class Applet extends JFrame {
 		});
 	}
 
-	public void loadURL() {
+	public void loadURL(String resourcePath) {
 		Platform.runLater(new Runnable() {
 			public void run() {
-				URL f = this.getClass().getResource("/com/lockdown/html/data.html");
+				URL f = this.getClass().getResource(resourcePath);
 				try {
 					engine.load((f.toURI()).toString());
 				} catch (URISyntaxException e) {
@@ -110,7 +104,7 @@ public class Applet extends JFrame {
 
 			public void run() {
 				browser = new Applet();
-				browser.loadURL();
+				browser.loadURL("/com/lockdown/html/data.html");
 				browser.setVisible(true);
 			}
 		});
