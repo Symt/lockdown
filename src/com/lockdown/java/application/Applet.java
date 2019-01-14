@@ -29,7 +29,7 @@ import javafx.scene.Scene;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
-public class Applet extends JFrame{
+public class Applet extends JFrame {
 
 	private GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 	private static final long serialVersionUID = 1L;
@@ -104,7 +104,7 @@ public class Applet extends JFrame{
 
 			public void run() {
 				browser = new Applet();
-				browser.loadURL("/com/lockdown/html/data.html");
+				browser.loadURL("/com/lockdown/html/teacher.html");
 				browser.setVisible(true);
 			}
 		});
