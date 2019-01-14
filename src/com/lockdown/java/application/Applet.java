@@ -36,6 +36,7 @@ public class Applet extends JFrame {
 	private final JFXPanel jfxPanel = new JFXPanel();
 	private WebEngine engine;
 	public static Applet browser;
+	public static boolean full;
 
 	public Applet() {
 		super();
@@ -43,6 +44,7 @@ public class Applet extends JFrame {
 	}
 
 	private void initComponents() {
+		full=false;
 		createScene();
 
 		add(jfxPanel, BorderLayout.CENTER);
@@ -76,7 +78,7 @@ public class Applet extends JFrame {
 								}
 							};
 							Document doc = engine.getDocument();
-							NodeList list = doc.getElementsByTagName("span");
+							NodeList list = doc.getElementsByTagName("button");
 							for (int i = 0; i < list.getLength(); i++)
 								((EventTarget) list.item(i)).addEventListener("click", listener, false);
 						}
@@ -104,17 +106,16 @@ public class Applet extends JFrame {
 
 			public void run() {
 				browser = new Applet();
-				browser.loadURL("/com/lockdown/html/teacher.html");
+				browser.loadURL("/com/lockdown/html/student.html");
 				browser.setVisible(true);
 			}
 		});
 	}
 
 	public void fullScreen() {
-		gd.setFullScreenWindow(this);
+		gd.setFullScreenWindow(full?null:this);
+		full=!full;
 	}
 
-	public void minScreen() {
-		gd.setFullScreenWindow(null);
-	}
+
 }

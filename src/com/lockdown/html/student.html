@@ -8,10 +8,10 @@
 
 <body onload="start()">
     <nav>
-        <div id="wrapper"><span onclick="update('Home', this)" href="{no_internal_action}" class="active navbutton">Home</span><span
-                onclick="update('Applications', this)" href="{no_internal_action}" class="navbutton">Applications</span><span
-                onclick="update('Commands', this)" href="{no_internal_action}" class="navbutton">Commands</span><span
-                onclick="update('Settings', this)" href="{no_internal_action}" class="navbutton">Settings</span>
+        <div id="wrapper"><span onclick="update('Home', this)" class="active navbutton">Home</span><span
+                onclick="update('Applications', this)" class="navbutton">Applications</span><span
+                onclick="update('Commands', this)" class="navbutton">Commands</span><span
+                onclick="update('Settings', this)" class="navbutton">Settings</span>
         </div>
     </nav>
     <div id="home" style="display: block;" class="page">
@@ -25,11 +25,9 @@
 
     </div>
     <div id="commands" style="display: none;" class="page">
-        <button><span href="{download_file|/Desktop/|www.geeksforgeeks.org/wp-content/uploads/gq/2016/01/serialize-deserialize-java.png|serialize-deserialize-java.png}">Download
-            Button</span></button>
-        <button><span href="{execute_command|say hello}">Execute Button</span></button>
-        <button><span href="{fullscreen}">Fullscreen</span></button>
-        <button><span href="{minscreen}">Minimize</span></button>
+        <button class="big-btn" href="{download_file|/Desktop/|www.geeksforgeeks.org/wp-content/uploads/gq/2016/01/serialize-deserialize-java.png|serialize-deserialize-java.png}">Download</button></span>
+        <button class="big-btn" href="{execute_command|say hello}">Execute Button</button>
+        <button class="big-btn" href="{fullscreen}">Fullscreen/Minimize</button>
     </div>
     <div id="settings" style="display: none;" class="page">
 

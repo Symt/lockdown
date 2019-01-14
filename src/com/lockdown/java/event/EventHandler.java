@@ -36,11 +36,6 @@ public final class EventHandler {
 					}
 				};
 				break;
-			case "minscreen":
-				t = (nothing) -> {
-					Applet.browser.minScreen();
-				};
-				break;
 			case "fullscreen":
 				t = (nothing) -> {
 					Applet.browser.fullScreen();
