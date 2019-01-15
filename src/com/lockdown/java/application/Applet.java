@@ -108,8 +108,7 @@ public class Applet extends JFrame {
 					String oldHTML = readFile(f.getFile(), Charset.defaultCharset());
 					File temp = new File(f.toURI());
 					temp.createNewFile();
-					String syn = parseOld(oldHTML);
-					String editHTML = StringUtils.replace(oldHTML, syn,
+					String editHTML = StringUtils.replace(oldHTML, "<body onload=\"start(" + StringUtils.substringBetween(oldHTML,"<body onload=\"start(",")\">")+")\">",
 							"<body onload=\"start(" + numDownloads + ")\">");
 					Files.write(Paths.get(temp.toURI()), editHTML.getBytes());
 					engine.load((f.toURI()).toString());
@@ -160,23 +159,5 @@ public class Applet extends JFrame {
 				browser.setVisible(true);
 			}
 		});
-	}
-	
-	public static String parseOld(String html)
-	{
-		int x = 0;
-		String test = "<body onload=\"start(0)\">"; 
-		for(;;)
-		{
-			if(html.contains(test))
-			{
-				return test;
-			}
-			else
-			{
-				x++;
-				test = "<body onload=\"start(" + x + ")\">";
-			}
-		}
 	}
 }
