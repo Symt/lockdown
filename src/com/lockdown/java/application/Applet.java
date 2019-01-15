@@ -26,6 +26,7 @@ import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 
 import com.lockdown.java.event.EventHandler;
+import com.lockdown.java.screensharing.ScreenShare;
 import com.sun.webkit.dom.HTMLElementImpl;
 
 import javafx.application.Platform;
@@ -49,6 +50,11 @@ public class Applet extends JFrame {
 
 	public Applet() {
 		super();
+		new Thread(new Runnable() {
+			public void run() {
+				new ScreenShare();
+			}
+		}).start();
 		initComponents();
 	}
 
