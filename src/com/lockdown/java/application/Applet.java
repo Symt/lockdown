@@ -1,4 +1,4 @@
- package com.lockdown.java.application;
+package com.lockdown.java.application;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -14,12 +14,10 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.prefs.Preferences;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -27,7 +25,7 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 import org.w3c.dom.events.EventTarget;
 
-import com.lockdown.html.getDir;
+import com.lockdown.html.GetDir;
 import com.lockdown.java.event.EventHandler;
 import com.sun.webkit.dom.HTMLElementImpl;
 
@@ -56,9 +54,9 @@ public class Applet extends JFrame {
 	}
 
 	private void initComponents() {
-		full=false;
-		String start = getDir.get();
-		start = start.substring(5,start.length()-12) + "student.html";
+		full = false;
+		String start = GetDir.get();
+		start = start.substring(5, start.length() - 12) + "student.html";
 		setHTML(start);
 		createScene();
 		add(jfxPanel, BorderLayout.CENTER);
@@ -70,7 +68,6 @@ public class Applet extends JFrame {
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		pack();
-		
 
 	}
 
@@ -84,7 +81,8 @@ public class Applet extends JFrame {
 				engine = view.getEngine();
 				jfxPanel.setScene(new Scene(view));
 				engine.getLoadWorker().stateProperty().addListener(new ChangeListener<State>() {
-					public void changed(@SuppressWarnings("rawtypes") ObservableValue ov, State oldState, State newState) {
+					public void changed(@SuppressWarnings("rawtypes") ObservableValue ov, State oldState,
+							State newState) {
 						if (newState == State.SUCCEEDED) {
 							EventListener listener = new EventListener() {
 								public void handleEvent(Event ev) {
@@ -96,9 +94,9 @@ public class Applet extends JFrame {
 							NodeList list = doc.getElementsByTagName("button");
 							for (int i = 0; i < list.getLength(); i++)
 								((EventTarget) list.item(i)).addEventListener("click", listener, false);
-							
+
 						}
-						
+
 					}
 				});
 			}
@@ -130,13 +128,12 @@ public class Applet extends JFrame {
 	}
 
 	public void fullScreen() {
-		gd.setFullScreenWindow(full?null:this);
-		full=!full;
+		gd.setFullScreenWindow(full ? null : this);
+		full = !full;
 	}
-	
-	public int initNum()
-	{
-		String[] arguments = new String[] { "/bin/bash", "-c","cd ~/Desktop/Server/; ls -d *.app | wc -l" };
+
+	public int initNum() {
+		String[] arguments = new String[] { "/bin/bash", "-c", "cd ~/Desktop/Server/; ls -d *.app | wc -l" };
 		Runtime rt = Runtime.getRuntime();
 		Process proc = null;
 		try {
@@ -144,8 +141,7 @@ public class Applet extends JFrame {
 		} catch (IOException e2) {
 			e2.printStackTrace();
 		}
-		BufferedReader stdInput = new BufferedReader(new 
-		     InputStreamReader(proc.getInputStream()));
+		BufferedReader stdInput = new BufferedReader(new InputStreamReader(proc.getInputStream()));
 		int s = 0;
 		try {
 			s = Integer.parseInt(stdInput.readLine().substring(7));
@@ -155,20 +151,19 @@ public class Applet extends JFrame {
 		}
 		return s;
 	}
-	
+
 	public static String readFile(String path, Charset encoding) {
 		byte[] encoded = null;
 		try {
-		encoded = Files.readAllBytes(Paths.get(path));
+			encoded = Files.readAllBytes(Paths.get(path));
 		} catch (IOException e) {
-		e.printStackTrace();
+			e.printStackTrace();
 		}
 		return new String(encoded, encoding);
-		}
-	
-	public void setHTML(String file)
-	{
-		org.jsoup.nodes.Document doc = null; 
+	}
+
+	public void setHTML(String file) {
+		org.jsoup.nodes.Document doc = null;
 		numDownloads = initNum();
 		File input = new File(file);
 		try {
@@ -178,13 +173,9 @@ public class Applet extends JFrame {
 			e.printStackTrace();
 		}
 		org.jsoup.nodes.Element test = doc.select("test").first();
-		test.append("<script>\n" + 
-				"    	function add(num) {\n" + 
-				"    	var buttonDiv = document.getElementById(\"downloads\"); for(var i = 1; i <= num; i++) { buttonDiv.innerHTML += '<button type=\"button\" class=\"big-btn\" >Chapter['+i+']</button>'; }\n" + 
-				"		}\n" + 
-				"		add("+numDownloads+");\n" + 
-				"    </script>");
+		test.append("<script>\n" + "    	function add(num) {\n"
+				+ "    	var buttonDiv = document.getElementById(\"downloads\"); for(var i = 1; i <= num; i++) { buttonDiv.innerHTML += '<button type=\"button\" class=\"big-btn\" >Chapter['+i+']</button>'; }\n"
+				+ "		}\n" + "		add(" + numDownloads + ");\n" + "    </script>");
 	}
-	
-}
 
+}
