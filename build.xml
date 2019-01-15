@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <project basedir="." name="Lockdown" default="compile">
 	<property name="version" value="1.0" />
-	<property name="buildnumber" value="1" />
+	<property name="buildnumber" value="2" />
 	<property name="jarbundler.jar" value="./resources/jarbundler-core-3.3.0.jar" />
 	<path id="classpath">
 		<fileset dir="lib">
-		    <include name="**/*.jar" />
-		  </fileset>
+			<include name="**/*.jar" />
+		</fileset>
 	</path>
 	<target name="compile">
 		<mkdir dir="classes" />
-		
+
 		<copy todir="classes/com/lockdown/html">
-		  <fileset dir="src/com/lockdown/html"/>
+			<fileset dir="src/com/lockdown/html" />
 		</copy>
 		<javac includeantruntime="false" source="1.8" target="1.8" compiler="org.eclipse.jdt.core.JDTCompilerAdapter" srcdir="src" destdir="classes" classpathref="classpath" />
 		<antcall target="jar" />
@@ -24,11 +24,16 @@
 				<attribute name="Main-Class" value="com.lockdown.java.application.Applet" />
 			</manifest>
 		</jar>
+		<jar jarfile="builds/lockdown-compiled-${version}_${buildnumber}.jar" basedir="classes">
+			<manifest>
+				<attribute name="Main-Class" value="com.lockdown.java.application.Applet" />
+			</manifest>
+		</jar>
 		<antcall target="simple" />
 	</target>
 	<target name="simple">
 		<taskdef name="jarbundler" classpath="${jarbundler.jar}" classname="com.ultramixer.jarbundler.JarBundler" />
-		<jarbundler dir="builds" jvmversion="1.8+" version="1.0" build="001" name="Lockdown" shortname="Lockdown" icon="resources/icon.icns" stubfile="resources/universalJavaApplicationStub" mainclass="com.lockdown.java.application.Applet" jar="build/lockdown.jar" useJavaXKey="true"/>
+		<jarbundler dir="builds" jvmversion="1.8+" version="1.0" build="001" name="Lockdown" shortname="Lockdown" icon="resources/icon.icns" stubfile="resources/universalJavaApplicationStub" mainclass="com.lockdown.java.application.Applet" jar="build/lockdown.jar" useJavaXKey="true" />
 		<antcall target="clean" />
 	</target>
 	<target name="clean">

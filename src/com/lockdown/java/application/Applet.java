@@ -145,13 +145,9 @@ public class Applet extends JFrame {
 		return s;
 	}
 
-	public static String readFile(String path, Charset encoding) {
+	public static String readFile(String path, Charset encoding) throws IOException {
 		byte[] encoded = null;
-		try {
-			encoded = Files.readAllBytes(Paths.get(path));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		encoded = Files.readAllBytes(Paths.get(path));
 		return new String(encoded, encoding);
 	}
 
