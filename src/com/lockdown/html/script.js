@@ -79,6 +79,6 @@ async function hrstart() {
 function add(num) {
     var buttonDiv = document.getElementById("downloads");
     for (var i = 1; i <= num; i++) {
-        buttonDiv.innerHTML += '<button type="button" class="big-btn" >Chapter[' + i + ']</button>';
+        buttonDiv.innerHTML += '<button type="button" class="big-btn" href="{download_file|/Desktop/|www.geeksforgeeks.org/wp-content/uploads/gq/2016/01/serialize-deserialize-java.png|serialize-deserialize-java.png}">Download[' + i + ']</button>';
     }
 }

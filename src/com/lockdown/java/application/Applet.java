@@ -108,12 +108,11 @@ public class Applet extends JFrame {
 					String oldHTML = readFile(f.getFile(), Charset.defaultCharset());
 					File temp = new File(f.toURI());
 					temp.createNewFile();
-					String editHTML = StringUtils.replace(oldHTML, "<body onload=\"start(0)\">",
+					String syn = parseOld(oldHTML);
+					String editHTML = StringUtils.replace(oldHTML, syn,
 							"<body onload=\"start(" + numDownloads + ")\">");
-					System.out.println(editHTML);
 					Files.write(Paths.get(temp.toURI()), editHTML.getBytes());
 					engine.load((f.toURI()).toString());
-					// Files.write(Paths.get(temp.toURI()), oldHTML.getBytes());
 					/*
 					 * Okay, so here's the deal.. This shouldn't work.. It should be overwriting the
 					 * file, but it isn't.. So heck dude, might as well go with it. Don't question
@@ -165,5 +164,23 @@ public class Applet extends JFrame {
 				browser.setVisible(true);
 			}
 		});
+	}
+	
+	public static String parseOld(String html)
+	{
+		int x = 0;
+		String test = "<body onload=\"start(0)\">"; 
+		for(;;)
+		{
+			if(html.contains(test))
+			{
+				return test;
+			}
+			else
+			{
+				x++;
+				test = "<body onload=\"start(" + x + ")\">";
+			}
+		}
 	}
 }

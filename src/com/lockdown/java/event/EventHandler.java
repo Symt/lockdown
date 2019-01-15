@@ -22,7 +22,6 @@ public final class EventHandler {
 			case "download_file":
 				t = (arg) -> {
 					FileDownloader fd = new FileDownloader("https://" + arg[1], arg[2], System.getProperty("user.home") + arg[0]);
-					// Example where an applescript app to display the time was in the users /tmp/  : directory FileDownloader fd = new FileDownloader("file:///Users/3123461/tmp/Test.app", "Test.app", System.getProperty("user.home") + "/tmp/");
 					fd.downloadFile();
 				};
 				break;
