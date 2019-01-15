@@ -1,4 +1,5 @@
-function start() {
+function start(num) {
+    add(num);
     homestart().then(function () {
         percent = 0;
         document.getElementById("hr").style.display = "block";
@@ -44,7 +45,7 @@ function update(location, self) {
         document.getElementById("commands").style.display = "block";
         document.getElementById("settings").style.display = "none";
         document.getElementById("downloads").style.display = "none";
-    }else if (location == "Downloads") {
+    } else if (location == "Downloads") {
         document.getElementById("home").style.display = "none";
         document.getElementById("applications").style.display = "none";
         document.getElementById("commands").style.display = "none";
@@ -75,3 +76,9 @@ async function hrstart() {
     }, 10);
 }
 
+function add(num) {
+    var buttonDiv = document.getElementById("downloads");
+    for (var i = 1; i <= num; i++) {
+        buttonDiv.innerHTML += '<button type="button" class="big-btn" >Chapter[' + i + ']</button>';
+    }
+}
