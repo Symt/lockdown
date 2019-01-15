@@ -25,21 +25,31 @@ function update(location, self) {
         document.getElementById("applications").style.display = "none";
         document.getElementById("commands").style.display = "none";
         document.getElementById("settings").style.display = "none";
+        document.getElementById("downloads").style.display = "none";
     } else if (location == "Applications") {
         document.getElementById("home").style.display = "none";
         document.getElementById("applications").style.display = "block";
         document.getElementById("commands").style.display = "none";
         document.getElementById("settings").style.display = "none";
+        document.getElementById("downloads").style.display = "none";
     } else if (location == "Settings") {
         document.getElementById("home").style.display = "none";
         document.getElementById("applications").style.display = "none";
         document.getElementById("commands").style.display = "none";
         document.getElementById("settings").style.display = "block";
+        document.getElementById("downloads").style.display = "none";
     } else if (location == "Commands") {
         document.getElementById("home").style.display = "none";
         document.getElementById("applications").style.display = "none";
         document.getElementById("commands").style.display = "block";
         document.getElementById("settings").style.display = "none";
+        document.getElementById("downloads").style.display = "none";
+    }else if (location == "Downloads") {
+        document.getElementById("home").style.display = "none";
+        document.getElementById("applications").style.display = "none";
+        document.getElementById("commands").style.display = "none";
+        document.getElementById("settings").style.display = "none";
+        document.getElementById("downloads").style.display = "block";
     }
 }
 
@@ -64,3 +74,4 @@ async function hrstart() {
         hrstart();
     }, 10);
 }
+
