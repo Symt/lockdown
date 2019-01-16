@@ -1,13 +1,11 @@
 package com.lockdown.java.screensharing;
 
-import java.awt.AWTException;
-import java.awt.Color;
-
 /* 
  * Source for this code (unedited) can be found at https://github.com/UltimatePea/ScreenSharer/
  */
 
-import java.awt.Dimension;
+import java.awt.AWTException;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -19,17 +17,23 @@ import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.net.DatagramSocket;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 import javax.imageio.ImageIO;
-import javax.swing.JPanel;
 
 public class ScreenShare {
 	Socket socket;
+
 	public ScreenShare() {
 		String port = "10000"; // This will be set by the server when a teacher requests for it
-		server(Integer.parseInt(port));
+		if (available(Integer.parseInt(port))) {
+			server(Integer.parseInt(port));
+		} else {
+			System.err.println("-- Inavlid Port --\nPort: " + port
+					+ "\nPlease enter a port that is not in use and is in range\nValid Range: 1024 <= port <= 65535\n");
+		}
 	}
 
 	private void server(int port) {
@@ -40,26 +44,20 @@ public class ScreenShare {
 			Graphics g;
 			Point mouse;
 			ObjectOutputStream outstream;
-			while(true){
-				try{
-					socket = server.accept();
-					outstream = new ObjectOutputStream(socket.getOutputStream());
-					img = r.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
-					mouse = MouseInfo.getPointerInfo().getLocation();
-					g = img.getGraphics();
-					g.setColor(Color.BLACK);
-					g.fillRect(mouse.x, mouse.y, 30, 30);
-					ImageIO.write(img, "jpg", outstream);
-					socket.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+			while (true) {
+				socket = server.accept();
+				outstream = new ObjectOutputStream(socket.getOutputStream());
+				img = r.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
+				mouse = MouseInfo.getPointerInfo().getLocation();
+				g = img.getGraphics();
+				g.setColor(Color.BLACK);
+				g.fillRect(mouse.x, mouse.y, 15, 15);
+				ImageIO.write(img, "jpg", outstream);
+				socket.close();
 			}
-		}  catch (AWTException e) {
+		} catch (AWTException | IOException e) {
 			e.printStackTrace();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		} 
+		}
 
 	}
 
@@ -73,31 +71,38 @@ public class ScreenShare {
 
 		return dimg;
 	}
-}
 
-class ImagePanel extends JPanel {
-	private static final long serialVersionUID = 1L;
-	
-	private BufferedImage img;
+	/*
+	 * Courtesy of Apache Camel
+	 */
+	public static boolean available(int port) {
+		if (port < 1024 || port > 65535) {
+			return false;
+		}
 
-	@Override
-	public Dimension getPreferredSize() {
-		return new Dimension(200, 200);
+		ServerSocket ss = null;
+		DatagramSocket ds = null;
+		try {
+			ss = new ServerSocket(port);
+			ss.setReuseAddress(true);
+			ds = new DatagramSocket(port);
+			ds.setReuseAddress(true);
+			return true;
+		} catch (IOException e) {
+		} finally {
+			if (ds != null) {
+				ds.close();
+			}
+
+			if (ss != null) {
+				try {
+					ss.close();
+				} catch (IOException e) {
+					/* should not be thrown */
+				}
+			}
+		}
+
+		return false;
 	}
-
-	@Override
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		if (img != null)
-			g.drawImage(img, 0, 0, this);
-	}
-
-	public BufferedImage getImg() {
-		return img;
-	}
-
-	public void setImg(BufferedImage img) {
-		this.img = img;
-	}
-
 }
