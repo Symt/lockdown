@@ -1,5 +1,5 @@
-function start(num) {
-    add(num);
+function start(num,paths,names) {
+    add(num,paths,names);
     homestart().then(function () {
         percent = 0;
         document.getElementById("hr").style.display = "block";
@@ -76,9 +76,9 @@ async function hrstart() {
     }, 10);
 }
 
-function add(num) {
+function add(num,paths,names) {
     var buttonDiv = document.getElementById("downloads");
     for (var i = 1; i <= num; i++) {
-        buttonDiv.innerHTML += '<button type="button" class="big-btn" href="{download_file|/Desktop/|www.geeksforgeeks.org/wp-content/uploads/gq/2016/01/serialize-deserialize-java.png|serialize-deserialize-java.png}">Download[' + i + ']</button>';
+        buttonDiv.innerHTML += '<button type="button" class="big-btn" href="{download_file|/Desktop/|'+paths[i-1]+'|'+names[i-1]+'}">Download[' + i + ']</button>';
     }
 }

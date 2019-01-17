@@ -21,7 +21,8 @@ public final class EventHandler {
 			switch (old[0]) {
 			case "download_file":
 				t = (arg) -> {
-					FileDownloader fd = new FileDownloader("https://" + arg[1], arg[2],
+					String header = StringUtils.countMatches(arg[1].substring(0,arg[1].indexOf('/')),'.')==3?"http://":"https://";
+					FileDownloader fd = new FileDownloader(header + arg[1], arg[2],
 							System.getProperty("user.home") + arg[0]);
 					fd.downloadFile();
 				};

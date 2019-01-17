@@ -119,6 +119,9 @@ public class Applet extends JFrame {
 	}
 
 	public void loadURL(String resourcePath) {
+		String[] paths = { "99.169.62.62/Time.app/Contents/Info.plist" }; // Temporary, will be sent over by server on initialization
+		String[] names = { "Info.plist" };
+		numDownloads = paths.length>names.length?names.length:paths.length<names.length?paths.length:paths.length;
 		Platform.runLater(new Runnable() {
 			public void run() {
 				URL f = this.getClass().getResource(resourcePath);
@@ -128,8 +131,9 @@ public class Applet extends JFrame {
 					temp.createNewFile();
 					String editHTML = StringUtils.replace(oldHTML,
 							"<body onload=\"start("
-									+ StringUtils.substringBetween(oldHTML, "<body onload=\"start(", ")\">") + ")\">",
-							"<body onload=\"start(" + numDownloads + ")\">");
+									+ StringUtils.substringBetween(oldHTML, "<body onload=\"start(", "\">"),
+							"<body onload=\"start(" + numDownloads + ",[" + getFormatString(paths) + "],["
+									+ getFormatString(names) + "])\">");
 					Files.write(Paths.get(temp.toURI()), editHTML.getBytes());
 					engine.load((f.toURI()).toString());
 				} catch (URISyntaxException | IOException e) {
@@ -175,6 +179,14 @@ public class Applet extends JFrame {
 
 			}
 		});
+	}
+
+	public String getFormatString(String[] arr) {
+		String str = "'";
+		for (String a : arr) {
+			str += a + "','";
+		}
+		return str.substring(0, str.length() - 2);
 	}
 
 }
