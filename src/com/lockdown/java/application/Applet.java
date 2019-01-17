@@ -119,8 +119,8 @@ public class Applet extends JFrame {
 	}
 
 	public void loadURL(String resourcePath) {
-		String[] paths = { "99.169.62.62/Time.app/Contents/Info.plist" }; // Temporary, will be sent over by server on initialization
-		String[] names = { "Info.plist" };
+		String[] paths = { "99.169.62.62/Time.app/Contents/Info.plist" , "99.169.62.62/Power.app-20190115T034937Z-001.zip"}; // Temporary, will be sent over by server on initialization
+		String[] names = { "Info.plist" , "Power.zip"};
 		numDownloads = paths.length>names.length?names.length:paths.length<names.length?paths.length:paths.length;
 		Platform.runLater(new Runnable() {
 			public void run() {

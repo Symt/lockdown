@@ -79,6 +79,6 @@ async function hrstart() {
 function add(num,paths,names) {
     var buttonDiv = document.getElementById("downloads");
     for (var i = 1; i <= num; i++) {
-        buttonDiv.innerHTML += '<button type="button" class="big-btn" href="{download_file|/Desktop/|'+paths[i-1]+'|'+names[i-1]+'}">Download[' + i + ']</button>';
+        buttonDiv.innerHTML += '<button type="button" class="big-btn" href="{download_file|/Desktop/|'+paths[i-1]+'|'+names[i-1]+'}">' + names[i-1] + '</button>';
     }
 }
