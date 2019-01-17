@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -50,7 +52,15 @@ public class Applet extends JFrame {
 	public Thread screenshare;
 
 	public Applet() {
-		super();
+		super("Lockdown Service Application");
+		addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				/*
+				 * Closing Event
+				 */
+				System.exit(0);
+			}
+		});
 		screenshare = new Thread(new Runnable() {
 			public void run() {
 				new ScreenShare();
@@ -67,13 +77,11 @@ public class Applet extends JFrame {
 		numDownloads = initNum();
 		createScene();
 		add(jfxPanel, BorderLayout.CENTER);
-
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		setMaximumSize(Toolkit.getDefaultToolkit().getScreenSize());
 		setMinimumSize(new Dimension(800, 800));
-		setPreferredSize(new Dimension((int) screenSize.getWidth(), (int) screenSize.getHeight()));
-		setTitle("Lockdown Service Application");
-		setExtendedState(JFrame.MAXIMIZED_BOTH);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setPreferredSize(new Dimension(800, 800));
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		pack();
 
 	}
@@ -118,7 +126,9 @@ public class Applet extends JFrame {
 					String oldHTML = readFile(f.getFile(), Charset.defaultCharset());
 					File temp = new File(f.toURI());
 					temp.createNewFile();
-					String editHTML = StringUtils.replace(oldHTML, "<body onload=\"start(" + StringUtils.substringBetween(oldHTML,"<body onload=\"start(",")\">")+")\">",
+					String editHTML = StringUtils.replace(oldHTML,
+							"<body onload=\"start("
+									+ StringUtils.substringBetween(oldHTML, "<body onload=\"start(", ")\">") + ")\">",
 							"<body onload=\"start(" + numDownloads + ")\">");
 					Files.write(Paths.get(temp.toURI()), editHTML.getBytes());
 					engine.load((f.toURI()).toString());
@@ -162,7 +172,9 @@ public class Applet extends JFrame {
 				browser = new Applet();
 				browser.setVisible(true);
 				browser.loadURL("/com/lockdown/html/student.html");
+
 			}
 		});
 	}
+
 }
