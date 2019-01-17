@@ -47,14 +47,18 @@ public class Applet extends JFrame {
 	public static Applet browser;
 	public static boolean full;
 	public static int numDownloads;
+	public Thread screenshare;
 
 	public Applet() {
 		super();
-		new Thread(new Runnable() {
+		screenshare = new Thread(new Runnable() {
 			public void run() {
 				new ScreenShare();
 			}
-		}).start();
+		});
+		/*
+		 * screenshare.start() <-- event performed when requested by server
+		 */
 		initComponents();
 	}
 
@@ -118,11 +122,6 @@ public class Applet extends JFrame {
 							"<body onload=\"start(" + numDownloads + ")\">");
 					Files.write(Paths.get(temp.toURI()), editHTML.getBytes());
 					engine.load((f.toURI()).toString());
-					/*
-					 * Okay, so here's the deal.. This shouldn't work.. It should be overwriting the
-					 * file, but it isn't.. So heck dude, might as well go with it. Don't question
-					 * the logic, just accept it
-					 */
 				} catch (URISyntaxException | IOException e) {
 					e.printStackTrace();
 				}
@@ -161,8 +160,8 @@ public class Applet extends JFrame {
 
 			public void run() {
 				browser = new Applet();
-				browser.loadURL("/com/lockdown/html/student.html");
 				browser.setVisible(true);
+				browser.loadURL("/com/lockdown/html/student.html");
 			}
 		});
 	}
