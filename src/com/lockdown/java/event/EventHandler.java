@@ -21,7 +21,8 @@ public final class EventHandler {
 			switch (old[0]) {
 			case "download_file":
 				t = (arg) -> {
-					FileDownloader fd = new FileDownloader("https://" + arg[1], arg[2], System.getProperty("user.home") + arg[0]);
+					FileDownloader fd = new FileDownloader("https://" + arg[1], arg[2],
+							System.getProperty("user.home") + arg[0]);
 					fd.downloadFile();
 				};
 				break;
@@ -47,11 +48,33 @@ public final class EventHandler {
 			default:
 				return;
 			}
-		} catch (ArrayIndexOutOfBoundsException | NullPointerException e ) {
-			System.out.println("Malformed command: " + event + "\nIt should contain more/less parts to match up with the command. See the documentation (Comming soon)");
+		} catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
+			System.err.println("Malformed command: " + event
+					+ "\nIt should contain more/less parts to match up with the command. See the documentation (Comming soon)");
 		}
-		Event e = new Event(event, repeats, repeatDelay, iterations, t, args);
-		e.execute();
+		new Thread((new Runnable() {
+			String event;
+			boolean repeats;
+			long repeatDelay;
+			int iterations;
+			Trigger t;
+			String[] args;
+
+			public void run() {
+				new Event(event, repeats, repeatDelay, iterations, t, args).execute();
+			}
+
+			public Runnable passArgs(String event, boolean repeats, long repeatDelay, int iterations, Trigger t,
+					String[] args) {
+				this.event = event;
+				this.repeats = repeats;
+				this.repeatDelay = repeatDelay;
+				this.iterations = iterations;
+				this.t = t;
+				this.args = args;
+				return this;
+			}
+		}).passArgs(event, repeats, repeatDelay, iterations, t, args)).start();
 	}
 
 }
