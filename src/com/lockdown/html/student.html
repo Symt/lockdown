@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./jquery-3.3.1.min.js"></script>
     <script src="./script.js"></script>
     <link rel="stylesheet" href="./styles.css" />
 </head>
 
 <body onload="start(0,[],[])">
+    <!-- Despite having JQuery, this will stay for the time being. 
+        Eventually, this will be completely replaced by an event handler in the script.js file-->
     <nav>
         <div id="wrapper"><span onclick="update('Home', this)" class="active navbutton unselectable">Home</span><span
-                onclick="update('Applications', this)" class="navbutton unselectable">Applications</span><span
-                onclick="update('Commands', this)" class="navbutton unselectable">Commands</span><span
-                onclick="update('Settings', this)" class="navbutton unselectable">Settings</span><span
+                onclick="update('Applications', this)" class="navbutton unselectable">Applications</span><span onclick="update('Commands', this)"
+                class="navbutton unselectable">Commands</span><span onclick="update('Settings', this)" class="navbutton unselectable">Settings</span><span
                 onclick="update('Downloads', this)" class="navbutton unselectable">Downloads</span>
         </div>
     </nav>
@@ -33,11 +36,11 @@
     <div id="settings" style="display: none;" class="page">
 
     </div>
-    
-     </div>
+
+    </div>
     <test id="downloads" style="display: none;" class="page">
-    
-     
+
+
     </test>
 </body>
 
