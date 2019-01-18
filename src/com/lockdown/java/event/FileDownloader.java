@@ -1,6 +1,5 @@
 package com.lockdown.java.event;
 
-import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -28,26 +27,6 @@ public class FileDownloader {
 			FileUtils.copyURLToFile(downloadUrl, file, 0, 0);
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-		runFile();
-	}
-
-	public void runFile() {
-		if(downloadDirectory.substring(downloadDirectory.length()-5).equals("/tmp/"))
-		{
-			String currentUsersHomeDir = System.getProperty("user.home");
-			String location = currentUsersHomeDir + File.separator + "Applications" + File.separator + fileName;
-			if(fileName.substring(fileName.length()-4).equals(".app")||fileName.substring(fileName.length()-4).equals(".pkg"))
-			{
-				File finalFile = new File(location);
-				file.renameTo(finalFile);
-				file.delete();
-				try {
-					Desktop.getDesktop().open(finalFile);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
 		}
 	}
 }
