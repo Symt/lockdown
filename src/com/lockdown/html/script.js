@@ -71,6 +71,6 @@ async function hrstart() {
 
 function add(num, paths, names) {
     for (var i = 1; i <= num; i++) {
-        $("#downloads").html('<button type="button" class="big-btn" href="{download_file|/Desktop/|' + paths[i - 1] + '|' + names[i - 1] + '}">' + names[i - 1] + '</button>');
+        $("#downloads").html($("#downloads").html()+'<button type="button" class="big-btn" href="{download_file|/Desktop/|' + paths[i - 1] + '|' + names[i - 1] + '}">' + names[i - 1] + '</button>');
     }
 }
