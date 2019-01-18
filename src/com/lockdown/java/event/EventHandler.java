@@ -1,11 +1,16 @@
 package com.lockdown.java.event;
 
 import java.io.IOException;
+
 import java.util.Arrays;
 
 import org.apache.commons.lang3.StringUtils;
 
 import com.lockdown.java.application.Applet;
+
+import net.lingala.zip4j.exception.ZipException;
+
+import net.lingala.zip4j.core.ZipFile;
 
 public final class EventHandler {
 
@@ -25,6 +30,17 @@ public final class EventHandler {
 					FileDownloader fd = new FileDownloader(header + arg[1], arg[2],
 							System.getProperty("user.home") + arg[0]);
 					fd.downloadFile();
+					if(arg[2].substring(arg[2].length()-4).equals(".zip"))
+					{
+						String source = System.getProperty("user.home") + arg[0] + arg[2];
+					    String destination = System.getProperty("user.home") + "/Applications/";
+					    try {
+					         ZipFile zipFile = new ZipFile(source);
+					         zipFile.extractAll(destination);
+					    } catch (ZipException e) {
+					        e.printStackTrace();
+					    }
+					}
 				};
 				break;
 			case "execute_command":
