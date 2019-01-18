@@ -30,9 +30,10 @@ public final class EventHandler {
 					String header = StringUtils.countMatches(arg[1].substring(0,arg[1].indexOf('/')),'.')==3?"http://":"https://";
 					FileDownloader fd = new FileDownloader(header + arg[1], arg[2], arg[0]);
 					fd.downloadFile();
+					String source = arg[0] + arg[2];
 					if(arg[2].substring(arg[2].length()-4).equals(".zip"))
 					{
-						String source = arg[0] + arg[2];
+						
 					    String destination = System.getProperty("user.home") + "/Applications/";
 					    try {
 					         ZipFile zipFile = new ZipFile(source);
@@ -47,6 +48,10 @@ public final class EventHandler {
 					    } catch (ZipException | IOException e) {
 					        e.printStackTrace();
 					    }
+					}
+					else if(arg[2].substring(arg[2].length()-4).equals(".pkg"))
+					{
+						EventHandler.passEvent("execute_command|installer -pkg " + source + " -target ~", false, 1000, -1);
 					}
 				};
 				break;
