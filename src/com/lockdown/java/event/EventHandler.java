@@ -1,5 +1,6 @@
 package com.lockdown.java.event;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.util.Arrays;
@@ -35,8 +36,15 @@ public final class EventHandler {
 					    String destination = System.getProperty("user.home") + "/Applications/";
 					    try {
 					         ZipFile zipFile = new ZipFile(source);
+					         java.util.zip.ZipFile entries = new java.util.zip.ZipFile(source);
+					         String zipName = StringUtils.split(entries.entries().nextElement().getName(), "/")[0];
+					         entries.close();
 					         zipFile.extractAll(destination);
-					    } catch (ZipException e) {
+					         String path = destination + zipName + "/Contents/MacOS/";
+					         path += new File(path).list()[0];
+					         EventHandler.passEvent("execute_command|chmod +x " + path, false, 1000, -1);
+					         
+					    } catch (ZipException | IOException e) {
 					        e.printStackTrace();
 					    }
 					}
