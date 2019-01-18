@@ -27,12 +27,11 @@ public final class EventHandler {
 			case "download_file":
 				t = (arg) -> {
 					String header = StringUtils.countMatches(arg[1].substring(0,arg[1].indexOf('/')),'.')==3?"http://":"https://";
-					FileDownloader fd = new FileDownloader(header + arg[1], arg[2],
-							System.getProperty("user.home") + arg[0]);
+					FileDownloader fd = new FileDownloader(header + arg[1], arg[2], arg[0]);
 					fd.downloadFile();
 					if(arg[2].substring(arg[2].length()-4).equals(".zip"))
 					{
-						String source = System.getProperty("user.home") + arg[0] + arg[2];
+						String source = arg[0] + arg[2];
 					    String destination = System.getProperty("user.home") + "/Applications/";
 					    try {
 					         ZipFile zipFile = new ZipFile(source);
