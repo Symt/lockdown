@@ -20,6 +20,7 @@ import java.nio.file.Paths;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -126,7 +127,8 @@ public class Applet extends JFrame {
 			public void run() {
 				URL f = this.getClass().getResource(resourcePath);
 				try {
-					String oldHTML = readFile(f.getFile(), Charset.defaultCharset());
+					String oldHTML = IOUtils.toString(this.getClass().getResourceAsStream(resourcePath), Charset.defaultCharset());
+					
 					File temp = new File(f.toURI());
 					temp.createNewFile();
 					String editHTML = StringUtils.replace(oldHTML,
@@ -161,12 +163,6 @@ public class Applet extends JFrame {
 			e.printStackTrace();
 		}
 		return s;
-	}
-
-	public static String readFile(String path, Charset encoding) throws IOException {
-		byte[] encoded = null;
-		encoded = Files.readAllBytes(Paths.get(path));
-		return new String(encoded, encoding);
 	}
 
 	public static void main(String[] args) {

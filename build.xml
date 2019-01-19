@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <project basedir="." name="Lockdown" default="compile">
 	<property name="version" value="1.0" />
-	<property name="buildnumber" value="2" />
+	<property name="buildnumber" value="3" />
 	<property name="jarbundler.jar" value="./resources/jarbundler-core-3.3.0.jar" />
 	<path id="classpath">
 		<fileset dir="lib">
 			<include name="**/*.jar" />
 		</fileset>
 	</path>
+	<pathconvert property="imp_classpath" pathsep=" ">
+	  <path refid="classpath"/>
+	  <mapper>
+	    <chainedmapper>
+	       <flattenmapper/>
+	       <globmapper from="*.jar" to="lib/*.jar"/>
+	    </chainedmapper>
+	  </mapper>
+	</pathconvert>
+	
 	<target name="compile">
 		<mkdir dir="classes" />
-
 		<copy todir="classes/com/lockdown/html">
 			<fileset dir="src/com/lockdown/html" />
 		</copy>
@@ -27,6 +36,7 @@
 		<jar jarfile="builds/lockdown-compiled-${version}_${buildnumber}.jar" basedir="classes">
 			<manifest>
 				<attribute name="Main-Class" value="com.lockdown.java.application.Applet" />
+				<attribute name="Class-Path" value="${imp_classpath}" />
 			</manifest>
 		</jar>
 		<antcall target="simple" />
