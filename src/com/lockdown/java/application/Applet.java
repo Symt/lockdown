@@ -7,10 +7,8 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.Charset;
@@ -75,7 +73,6 @@ public class Applet extends JFrame {
 
 	private void initComponents() {
 		full = false;
-		numDownloads = initNum();
 		createScene();
 		add(jfxPanel, BorderLayout.CENTER);
 		setMaximumSize(Toolkit.getDefaultToolkit().getScreenSize());
@@ -148,21 +145,6 @@ public class Applet extends JFrame {
 	public void fullScreen() {
 		gd.setFullScreenWindow(full ? null : this);
 		full = !full;
-	}
-
-	public int initNum() {
-		String[] arguments = new String[] { "/bin/bash", "-c", "cd ~/Desktop/Server/; ls -d *.app | wc -l" };
-		Runtime rt = Runtime.getRuntime();
-		Process proc = null;
-		int s = 0;
-		try {
-			proc = rt.exec(arguments);
-			BufferedReader stdInput = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-			s = Integer.parseInt(stdInput.readLine().substring(7));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return s;
 	}
 
 	public static void main(String[] args) {
