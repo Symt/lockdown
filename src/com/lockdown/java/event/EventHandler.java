@@ -8,9 +8,9 @@ import java.util.Arrays;
 import org.apache.commons.lang3.StringUtils;
 
 import com.lockdown.java.application.Applet;
+import com.lockdown.java.event.Trigger;
 
 import net.lingala.zip4j.exception.ZipException;
-
 import net.lingala.zip4j.core.ZipFile;
 
 public final class EventHandler {

@@ -7,19 +7,12 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
-import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.events.Event;
@@ -47,7 +40,6 @@ public class Applet extends JFrame {
 	private WebEngine engine;
 	public static Applet browser;
 	public static boolean full;
-	public static int numDownloads;
 	public Thread screenshare;
 
 	public Applet() {
@@ -117,25 +109,12 @@ public class Applet extends JFrame {
 	}
 
 	public void loadURL(String resourcePath) {
-		String[] paths = { "99.169.62.62/Time.zip" , "99.169.62.62/Power.zip"}; // Temporary, will be sent over by server on initialization
-		String[] names = { "Time.zip" , "Power.zip"};
-		numDownloads = paths.length>names.length?names.length:paths.length<names.length?paths.length:paths.length;
 		Platform.runLater(new Runnable() {
 			public void run() {
 				URL f = this.getClass().getResource(resourcePath);
 				try {
-					String oldHTML = IOUtils.toString(this.getClass().getResourceAsStream(resourcePath), Charset.defaultCharset());
-					
-					File temp = new File(f.toURI());
-					temp.createNewFile();
-					String editHTML = StringUtils.replace(oldHTML,
-							"<body onload=\"start("
-									+ StringUtils.substringBetween(oldHTML, "<body onload=\"start(", "\">"),
-							"<body onload=\"start(" + numDownloads + ",[" + getFormatString(paths) + "],["
-									+ getFormatString(names) + "])\">");
-					Files.write(Paths.get(temp.toURI()), editHTML.getBytes());
 					engine.load((f.toURI()).toString());
-				} catch (URISyntaxException | IOException e) {
+				} catch (URISyntaxException e) {
 					e.printStackTrace();
 				}
 			}
@@ -149,22 +128,12 @@ public class Applet extends JFrame {
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
-
 			public void run() {
 				browser = new Applet();
 				browser.setVisible(true);
-				browser.loadURL("/com/lockdown/html/student.html");
+				browser.loadURL("/com/lockdown/html/index.html");
 
 			}
 		});
 	}
-
-	public String getFormatString(String[] arr) {
-		String str = "'";
-		for (String a : arr) {
-			str += a + "','";
-		}
-		return str.substring(0, str.length() - 2);
-	}
-
 }
