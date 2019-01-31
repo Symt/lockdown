@@ -1,2 +1,3 @@
 /bin/
 .DS_Store
+/lockdown-frontend/node_modules/
