@@ -46,9 +46,6 @@ public class Applet extends JFrame {
 		super("Lockdown Service Application");
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-				/*
-				 * Closing Event
-				 */
 				System.exit(0);
 			}
 		});

@@ -25,6 +25,7 @@ import javax.imageio.ImageIO;
 
 public class ScreenShare {
 	Socket socket;
+	ServerSocket server;
 
 	public ScreenShare() {
 		String port = "10000"; // This will be set by the server when a teacher requests for it
@@ -38,7 +39,7 @@ public class ScreenShare {
 
 	private void server(int port) {
 		try {
-			ServerSocket server = new ServerSocket(port);
+			server = new ServerSocket(port);
 			Robot r = new Robot();
 			BufferedImage img;
 			Graphics g;

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --mode development --open",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production && cp -rf ./dist/*.* ../src/com/lockdown/html/; echo '\\033[0;32mCopied files successfully\\033[0m'"
   },
   "author": "symt",
   "license": "ISC",

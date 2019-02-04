@@ -6,6 +6,13 @@ export default class Home extends Component {
   }
 
   render() {
-    return <div>Home</div>
+    return (
+      <div>
+        <hr id="hr" />
+        <div className="unselectable" id="lockdown-center">
+            <p>Lockdown</p>
+        </div>
+      </div>
+    )
   }
 }

@@ -16,5 +16,33 @@ $("document").ready(() => {
   ReactDOM.render(<Applications />, document.getElementById("applications"));
   ReactDOM.render(<Commands />, document.getElementById("commands"));
   ReactDOM.render(<Navigation />, document.getElementById("nav"))
+  homestart();
 });
 
+let percent = 0;
+
+function homestart() {
+  setTimeout(function () {
+      if (percent == 26) {
+        $("#lockdown-center p").css("display", "block")
+          percent = 0;
+          $("#hr").css("display", "block")
+          hrstart();
+          return;
+      }
+      $("#lockdown-center").css("height", percent + "vw");
+      percent++;
+      homestart();
+  }, 10);
+}
+
+function hrstart() {
+  setTimeout(function () {
+      if (percent == 101) {
+          return;
+      }
+      $("#hr").css("width", percent + "%");
+      percent++;
+      hrstart();
+  }, 10);
+}

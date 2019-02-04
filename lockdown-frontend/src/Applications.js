@@ -22,7 +22,7 @@ export default class Applications extends Component {
   
     render() {
       return (
-  <table className="table table-striped w-50 center table-bordered">
+  <table className="table table-striped w-50 table-bordered allow-center horizontal-center vertical-center">
     <thead className="font-weight-bold">
       <tr>
         <td>Application</td>
