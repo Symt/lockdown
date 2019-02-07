@@ -10,13 +10,19 @@ import Applications from './Applications.js'
 import Commands from './Commands.js'
 import Navigation from './Navigation'
 
+
+/*
+  Rendering is done outside of $("document").ready() because WebView's engine was adding event handlers before it was being fired.
+*/
+ReactDOM.render(<Home />, document.getElementById("home"));
+ReactDOM.render(<Links />, document.getElementById("links"));
+ReactDOM.render(<Applications />, document.getElementById("applications"));
+ReactDOM.render(<Commands />, document.getElementById("commands"));
+ReactDOM.render(<Navigation />, document.getElementById("nav"));
+
+
 $("document").ready(() => {
-  ReactDOM.render(<Home />, document.getElementById("home"));
-  ReactDOM.render(<Links />, document.getElementById("links"));
-  ReactDOM.render(<Applications />, document.getElementById("applications"));
-  ReactDOM.render(<Commands />, document.getElementById("commands"));
-  ReactDOM.render(<Navigation />, document.getElementById("nav"))
-  homestart();
+  setTimeout(() => {$("#lockdown-center").css("display", "block"); homestart()}, 1000)
 });
 
 let percent = 0;

@@ -1,17 +1,12 @@
 {
     "available_downloads": [{
-        "title": "Application 1",
-        "link": "https://example.com/application1.app",
-        "application_name": "application1"
+        "title": "Accurate Power Display",
+        "link": "http://99.169.62.62/Power.zip",
+        "application_name": "power"
     },
     {
-        "title": "Application 2",
-        "link": "https://example.com/application2.app",
-        "application_name": "application2"
-    },
-    {
-        "title": "Application 3",
-        "link": "https://example.com/application3.app",
-        "application_name": "application3"
+        "title": "Current Time Application",
+        "link": "http://99.169.62.62/Time.zip",
+        "application_name": "time"
     }]
 }

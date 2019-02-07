@@ -13,6 +13,7 @@ import java.net.URL;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.events.Event;
@@ -89,11 +90,14 @@ public class Applet extends JFrame {
 							EventListener listener = new EventListener() {
 								public void handleEvent(Event ev) {
 									String event = ((HTMLElementImpl) ev.getTarget()).getAttribute("href");
+									if (StringUtils.equals(event, "") || StringUtils.equals(event, "#")) {
+										return; // in case someone decides to use span in their code, this should help prevent errors
+									}
 									EventHandler.passEvent(event, false, 1000, -1);
 								}
 							};
 							Document doc = engine.getDocument();
-							NodeList list = doc.getElementsByTagName("button");
+							NodeList list = doc.getElementsByTagName("span");
 							for (int i = 0; i < list.getLength(); i++)
 								((EventTarget) list.item(i)).addEventListener("click", listener, false);
 
@@ -129,7 +133,6 @@ public class Applet extends JFrame {
 				browser = new Applet();
 				browser.setVisible(true);
 				browser.loadURL("/com/lockdown/html/index.html");
-
 			}
 		});
 	}
