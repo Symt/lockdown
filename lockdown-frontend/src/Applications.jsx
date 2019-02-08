@@ -8,7 +8,7 @@ function tableGen(json) {
     rows.push(
       <tr key={i}>
         <td>{json.available_downloads[i].title}</td>
-        <td><Event eventAction={`{download_file|/tmp/|${json.available_downloads[i].link}|${json.available_downloads[i].application_name}}`} eventTitle={json.available_downloads[i].application_name} /></td>
+        <td><Event eventAction={`{download_file|/tmp/|${json.available_downloads[i].link}|${json.available_downloads[i].application_name}}`} eventTitle={json.available_downloads[i].link_title} /></td>
       </tr>,
     );
   }

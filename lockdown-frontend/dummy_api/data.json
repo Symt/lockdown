@@ -1,12 +1,14 @@
 {
     "available_downloads": [{
         "title": "Accurate Power Display",
-        "link": "http://99.169.62.62/Power.zip",
-        "application_name": "power"
+        "link": "99.169.62.62/Power.zip",
+        "application_name": "Power.zip",
+        "link_title": "Power"
     },
     {
         "title": "Current Time Application",
-        "link": "http://99.169.62.62/Time.zip",
-        "application_name": "time"
+        "link": "99.169.62.62/Time.zip",
+        "application_name": "Time.zip",
+        "link_title": "Time"
     }]
 }
