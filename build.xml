@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <project basedir="." name="Lockdown" default="compile">
 	<property name="version" value="1.0" />
-	<property name="buildnumber" value="4" />
+	<property name="buildnumber" value="5" />
 	<property name="jarbundler.jar" value="./resources/jarbundler-core-3.3.0.jar" />
 	<path id="classpath">
 		<fileset dir="lib">
