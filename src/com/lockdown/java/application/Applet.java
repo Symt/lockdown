@@ -101,6 +101,7 @@ public class Applet extends JFrame {
 							for (int i = 0; i < list.getLength(); i++)
 								((EventTarget) list.item(i)).addEventListener("click", listener, false);
 
+							browser.setVisible(true);
 						}
 
 					}
@@ -131,7 +132,6 @@ public class Applet extends JFrame {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				browser = new Applet();
-				browser.setVisible(true);
 				browser.loadURL("/com/lockdown/html/index.html");
 			}
 		});
