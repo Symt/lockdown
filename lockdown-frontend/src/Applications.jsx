@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
-import data from '../dummy_api/data.json';
 import Event from './Event.jsx';
 
 function tableGen(json) {
   const rows = [];
-  for (let i = 0; i < json.available_downloads.length; i += 1) {
+  if (json === null) {
+    return rows;
+  }
+  for (let i = 0; i < json.length; i += 1) {
     rows.push(
       <tr key={i}>
-        <td>{json.available_downloads[i].title}</td>
-        <td><Event eventAction={`{download_file|/tmp/|${json.available_downloads[i].link}|${json.available_downloads[i].application_name}}`} eventTitle={json.available_downloads[i].link_title} /></td>
+        <td>{json[i].title}</td>
+        <td><Event eventAction={`{download_file|/tmp/|${json[i].link}|${json[i].application_name}}`} eventTitle={json[i].application_name} /></td>
       </tr>,
     );
   }
@@ -19,8 +21,14 @@ export default class Applications extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      json: data,
+      json: null,
     };
+  }
+
+  componentDidMount() {
+    fetch('http://99.169.62.62:5000/').then(response => response.json()).then((json) => {
+      this.setState(Object.assign({}, { json }));
+    });
   }
 
   render() {
