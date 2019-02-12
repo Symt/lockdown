@@ -1,9 +1,10 @@
+/* eslint jsx-a11y/anchor-is-valid: 0 */
+/* eslint no-script-url: 0 */
 import React from 'react';
 import PropTypes from 'prop-types';
 
-
 export default function Event({ eventAction, eventTitle }) {
-  return <span><a href={eventAction}>{eventTitle}</a></span>;
+  return <a href="javascript:void(0)" onClick={() => handler.callEvent(eventAction)}>{eventTitle}</a>;
 }
 
 Event.propTypes = {

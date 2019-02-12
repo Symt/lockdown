@@ -4,6 +4,7 @@
         "import/extensions": "off"
     },
     "globals": {
-        "fetch": true
+        "fetch": true,
+        "handler": true
     }
 }

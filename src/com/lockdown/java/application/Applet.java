@@ -13,16 +13,7 @@ import java.net.URL;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import org.apache.commons.lang3.StringUtils;
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventListener;
-import org.w3c.dom.events.EventTarget;
-
-import com.lockdown.java.event.EventHandler;
 import com.lockdown.java.screensharing.ScreenShare;
-import com.sun.webkit.dom.HTMLElementImpl;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -32,6 +23,7 @@ import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import netscape.javascript.JSObject;
 
 public class Applet extends JFrame {
 
@@ -87,20 +79,8 @@ public class Applet extends JFrame {
 					public void changed(@SuppressWarnings("rawtypes") ObservableValue ov, State oldState,
 							State newState) {
 						if (newState == State.SUCCEEDED) {
-							EventListener listener = new EventListener() {
-								public void handleEvent(Event ev) {
-									String event = ((HTMLElementImpl) ev.getTarget()).getAttribute("href");
-									if (StringUtils.equals(event, "") || StringUtils.equals(event, "#")) {
-										return; // in case someone decides to use span in their code, this should help prevent errors
-									}
-									EventHandler.passEvent(event, false, 1000, -1);
-								}
-							};
-							Document doc = engine.getDocument();
-							NodeList list = doc.getElementsByTagName("span");
-							for (int i = 0; i < list.getLength(); i++)
-								((EventTarget) list.item(i)).addEventListener("click", listener, false);
-
+							JSObject window = (JSObject) engine.executeScript("window");
+							window.setMember("handler", new JavascriptHandlers());
 							browser.setVisible(true);
 						}
 					}
