@@ -10,7 +10,7 @@ function tableGen(json) {
     rows.push(
       <tr key={i}>
         <td>{json[i].title}</td>
-        <td><Event eventAction={`{download_file|/tmp/|${json[i].link}|${json[i].application_name}}`} eventTitle={json[i].application_name} /></td>
+        <td><Event eventAction={`{download_file|/tmp/|${json[i].link}|${json[i].link.split('/')[json[i].link.split('/').length - 1]}}`} eventTitle={json[i].application_name} /></td>
       </tr>,
     );
   }

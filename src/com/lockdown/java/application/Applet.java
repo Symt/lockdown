@@ -103,7 +103,6 @@ public class Applet extends JFrame {
 
 							browser.setVisible(true);
 						}
-
 					}
 				});
 			}
