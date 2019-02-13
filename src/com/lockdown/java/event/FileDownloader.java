@@ -24,7 +24,7 @@ public class FileDownloader {
 		try {
 			URL downloadUrl = new URL(fileLink);
 			file.createNewFile();
-			FileUtils.copyURLToFile(downloadUrl, file, 0, 0);
+			FileUtils.copyURLToFile(downloadUrl, file);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

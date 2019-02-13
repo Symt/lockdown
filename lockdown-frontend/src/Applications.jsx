@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import Event from './Event.jsx';
 
 function tableGen(json) {
@@ -22,29 +23,40 @@ export default class Applications extends Component {
     super(props);
     this.state = {
       json: null,
+      error: null,
     };
   }
 
   componentDidMount() {
-    fetch('http://99.169.62.62:5000/').then(response => response.json()).then((json) => {
-      this.setState(Object.assign({}, { json }));
+    const instance = axios.create({ timeout: 5000 });
+    instance.get('http://99.169.62.62:5000/').then((json) => {
+      this.setState({ json });
+    }).catch((error) => {
+      this.setState({ error });
     });
   }
 
   render() {
-    const { json } = this.state;
+    const { json, error } = this.state;
+    if (error == null && json != null) {
+      return (
+        <table className="table table-striped w-50 table-bordered allow-center horizontal-center vertical-center">
+          <thead className="font-weight-bold">
+            <tr>
+              <td>Application</td>
+              <td>Download</td>
+            </tr>
+          </thead>
+          <tbody>
+            {tableGen(json.data)}
+          </tbody>
+        </table>
+      );
+    } if (json == null && error == null) {
+      return <p style={{ height: 0, width: 300 }} className="text-center allow-center vertical-center horizontal-center">Loading application list</p>;
+    }
     return (
-      <table className="table table-striped w-50 table-bordered allow-center horizontal-center vertical-center">
-        <thead className="font-weight-bold">
-          <tr>
-            <td>Application</td>
-            <td>Download</td>
-          </tr>
-        </thead>
-        <tbody>
-          {tableGen(json)}
-        </tbody>
-      </table>
+      <p style={{ height: 0, width: 300 }} className="text-center allow-center vertical-center horizontal-center">{`Error: ${error.message}`}</p>
     );
   }
 }
