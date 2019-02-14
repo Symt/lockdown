@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export default function Event({ eventAction, eventTitle }) {
-  return <a href="javascript:void(0)" onClick={() => handler.callEvent(eventAction)}>{eventTitle}</a>;
+  return <a href="#" onClick={() => handler.callEvent(eventAction)}>{eventTitle}</a>;
 }
 
 Event.propTypes = {
