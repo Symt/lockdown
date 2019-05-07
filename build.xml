@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <project basedir="." name="Lockdown" default="compile">
-	<property name="version" value="1.0" />
-	<property name="buildnumber" value="5" />
+	<property name="version" value="0.0.1" />
 	<property name="jarbundler.jar" value="./resources/jarbundler-core-3.3.0.jar" />
 	<path id="classpath">
 		<fileset dir="lib">
@@ -33,7 +32,7 @@
 				<attribute name="Main-Class" value="com.lockdown.java.application.Applet" />
 			</manifest>
 		</jar>
-		<jar jarfile="builds/lockdown-compiled-${version}_${buildnumber}.jar" basedir="classes">
+		<jar jarfile="builds/lockdown-compiled-${version}.jar" basedir="classes">
 			<manifest>
 				<attribute name="Main-Class" value="com.lockdown.java.application.Applet" />
 				<attribute name="Class-Path" value="${imp_classpath}" />

@@ -1,17 +1,11 @@
 package com.lockdown.java.event;
 
-import java.io.File;
 import java.io.IOException;
-
 import java.util.Arrays;
 
 import org.apache.commons.lang3.StringUtils;
 
 import com.lockdown.java.application.Applet;
-import com.lockdown.java.event.Trigger;
-
-import net.lingala.zip4j.exception.ZipException;
-import net.lingala.zip4j.core.ZipFile;
 
 public final class EventHandler {
 
@@ -31,7 +25,7 @@ public final class EventHandler {
 					String header = (arg[1].startsWith("https://") || arg[1].startsWith("http://")) ? "" : "http://";
 					FileDownloader fd = new FileDownloader(header + arg[1], arg[2], arg[0]);
 					fd.downloadFile();
-					
+
 				};
 				break;
 			case "execute_command":
@@ -60,7 +54,7 @@ public final class EventHandler {
 			System.err.println("Malformed command: " + event
 					+ "\nIt should contain more/less parts to match up with the command. See the documentation (Comming soon)");
 		}
-		new Thread((new Runnable() {
+		new Thread(new Runnable() {
 			String event;
 			boolean repeats;
 			long repeatDelay;
@@ -82,7 +76,7 @@ public final class EventHandler {
 				this.args = args;
 				return this;
 			}
-		}).passArgs(event, repeats, repeatDelay, iterations, t, args)).start();
+		}.passArgs(event, repeats, repeatDelay, iterations, t, args)).start();
 	}
 
 }

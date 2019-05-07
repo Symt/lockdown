@@ -10,18 +10,15 @@ import Applications from './Applications.jsx';
 import Commands from './Commands.jsx';
 import Navigation from './Navigation.jsx';
 
-
-/*
-  Rendering is done outside of $("document").ready() because WebView's engine
-  was adding event handlers before it was being fired.
-*/
-
 /* global document */
-ReactDOM.render(<Home />, document.getElementById('home'));
-ReactDOM.render(<Links />, document.getElementById('links'));
-ReactDOM.render(<Applications />, document.getElementById('applications'));
-ReactDOM.render(<Commands />, document.getElementById('commands'));
-ReactDOM.render(<Navigation />, document.getElementById('nav'));
+
+$(document).ready(() => {
+  ReactDOM.render(<Home />, document.getElementById('home'));
+  ReactDOM.render(<Links />, document.getElementById('links'));
+  ReactDOM.render(<Applications />, document.getElementById('applications'));
+  ReactDOM.render(<Commands />, document.getElementById('commands'));
+  ReactDOM.render(<Navigation />, document.getElementById('nav'));
+});
 
 let percent = 0;
 
